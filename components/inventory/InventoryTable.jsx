@@ -11,7 +11,9 @@ const InventoryTable = ({items}) => {
 					<th scope="col">NFM stock</th>
 					<th scope="col">Total</th>
 					<th scope="col">Transfer from 311 to NFM</th>
+					<th scope="col">NFM after transfer</th>
 					<th scope="col">History</th>
+					<th scope='col'>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
