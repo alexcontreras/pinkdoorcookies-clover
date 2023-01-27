@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
 
 connection.connect()
 
-export default (req, res) => {
+export default async (req, res) => {
 	try {
 		// Define the data
 		const dataObjects = req.body
