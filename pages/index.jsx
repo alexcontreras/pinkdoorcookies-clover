@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Inventory from '../components/inventory/Inventory'
 export default function Home() {
-  const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
   const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
@@ -43,8 +42,8 @@ export default function Home() {
               PDC Inventory
               <button className="btn btn-danger btn-sm ms-3" disabled={isLoading} onClick={syncInventory}>Sync Inventory</button>
               {isSyncing && (
-                <div class="spinner-grow" role="status">
-                  <span class="visually-hidden">Loading...</span>
+                <div className="spinner-grow" role="status">
+                  <span className="visually-hidden">Loading...</span>
                 </div>
               )}
             </h1>

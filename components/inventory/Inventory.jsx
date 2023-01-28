@@ -4,12 +4,13 @@ import InventoryTable from './InventoryTable'
 
 const Inventory = ({ isSyncing }) => {
 	const [items, setItems] = useState([])
+	
 	useEffect(() => {
 		axios.get('/api/inventory').then((data) => {
 			console.log(data.data)
 			setItems(data.data)
 		})
-	}, [])
+	}, [isSyncing])
 	
 	return (
 		<div className={isSyncing ? 'opacity-50' : ''}>

@@ -5,6 +5,12 @@ const instance = axios.create({
 	baseURL: 'http://localhost:3000'
 })
 
+const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
+const cloverInstance = axios.create({
+	baseURL: 'https://api.clover.com',
+	headers: { 'Authorization': `Bearer ${AUTH_TOKEN}`}
+})
+
 const InventoryTableItem = ({item}) => {
 	const [state, setState] = useState({
 		storeStock: item.stock_quantity_after_transfer,
