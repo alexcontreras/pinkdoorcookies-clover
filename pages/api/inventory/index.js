@@ -1,13 +1,11 @@
 const mysql = require('mysql2')
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
 	host: process.env.MYSQL_HOST,
 	database: process.env.MYSQL_DATABASE,
 	user: process.env.MYSQL_USER,
 	password: process.env.MYSQL_PASSWORD,
 })
-
-connection.connect()
 
 export default async (req, res) => {
 	if (req.method === 'POST') {
@@ -33,7 +31,7 @@ export default async (req, res) => {
 				req.body.history
 			]
 
-			connection.query(query, values, (err, result) => {
+			pool.query(query, values, (err, result) => {
 				if (err) throw err
 				return res.status(200).send(result)
 			})
@@ -55,7 +53,7 @@ export default async (req, res) => {
 				req.body.product_id
 			]
 			
-			connection.query(query, values, (err, result) => {
+			pool.query(query, values, (err, result) => {
 				if (err) return err
 				return res.status(200).send(result)
 			})
@@ -66,7 +64,7 @@ export default async (req, res) => {
 		if (!req.body.product_id) {
 			try {
 				const query = 'SELECT * FROM inventory'
-				connection.query(query, (err, result) => {
+				pool.query(query, (err, result) => {
 					if (err) throw err
 					return res.status(200).send(result)
 				})
@@ -77,7 +75,7 @@ export default async (req, res) => {
 			try {
 				const query = 'SELECT * FROM inventory WHERE product_id = ?'
 				const values = [req.body.product_id]
-				connection.query(query, values, (err, result) => {
+				pool.query(query, values, (err, result) => {
 					if (err) throw err
 					return res.status(200).send(result)
 				})

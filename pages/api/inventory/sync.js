@@ -1,20 +1,20 @@
 const mysql = require('mysql2')
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
 	host: process.env.MYSQL_HOST,
 	database: process.env.MYSQL_DATABASE,
 	user: process.env.MYSQL_USER,
 	password: process.env.MYSQL_PASSWORD,
+	waitForConnections: true,
+	connectionLimit: 10,
+	queueLimit: 0
 })
-
-connection.connect()
 
 export default async (req, res) => {
 	try {
 		// Define the data
 		const dataObjects = req.body
-		let keys = ["id", "name", "stockCount"]
-		let data = dataObjects.map(object => keys.map(key => object[key]))
+		let data = dataObjects.map(object => [object.id, object.name, object.itemStock.stockCount])
 
 		// Generate placeholders
 		const placeholders = data.map(() => '(?, ?, ?)').join(', ')
@@ -32,12 +32,12 @@ export default async (req, res) => {
 			nfm_stock = VALUES(nfm_stock)
 		`
 		// Flatten the data array and execute the query
-		connection.query(query, [].concat(...data), (err, result) => {
+		pool.query(query, [].concat(...data), (err, result) => {
 			if (err) throw err
-			return res.status(200).send(result)
+			res.status(200).json({data: result})
 		})
 	} catch (e) {
 		console.log(e)
-		return res.status(200).send(e)
+		res.status(500).json({ error: e.message })
 	}
 }

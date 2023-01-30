@@ -15,7 +15,7 @@ const InventoryTableItem = ({item}) => {
 	const [state, setState] = useState({
 		storeStock: item.stock_quantity_after_transfer,
 		transferStock: 0,
-		nfm_stock: item.nfm_stock
+		nfm_stock: item.nfm_stock,
 	})
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -31,7 +31,7 @@ const InventoryTableItem = ({item}) => {
 			product_name: item.product_name,
 			stock_quantity: parseInt(state.storeStock),
 			stock_quantity_after_transfer: parseInt(state.storeStock) - parseInt(state.transferStock),
-			nfm_stock: parseInt(state.nfm_stock),
+			nfm_stock: parseInt(state.transferStock, 10) + parseInt(state.nfm_stock),
 			transfer_amount: parseInt(state.transferStock),
 			nfm_after_transfer: parseInt(state.transferStock, 10) + parseInt(state.nfm_stock),
 			total: parseInt(state.storeStock) + parseInt(item.nfm_stock),
@@ -41,6 +41,16 @@ const InventoryTableItem = ({item}) => {
 		instance.post('/api/inventory', data)
 			.then((response) => {
 				console.log(response)
+				const body = {
+					"stockCount": data.nfm_after_transfer,
+					"quantity": data.nfm_after_transfer,
+				}
+				cloverInstance.post(
+					`/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/item_stocks/${item.product_id}`,
+					body)
+						.then( (response) => {
+							console.log(response)
+						})
 			}).catch((e) => { console.log(e) })
 		
 		setIsLoading(false)

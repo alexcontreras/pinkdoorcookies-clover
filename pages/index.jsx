@@ -18,7 +18,7 @@ export default function Home() {
   const syncInventory = () => {
     setIsLoading(true)
     setIsSyncing(true)
-    instance.get('/v3/merchants/4FKKZT8Q4YAF1/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000').then((res) => {
+    instance.get('/v3/merchants/4FKKZT8Q4YAF1/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock').then((res) => {
       localApi.post('/api/inventory/sync', res.data.elements).then((res) => {
         console.log(res.data)
         setIsLoading(false)
