@@ -7,7 +7,7 @@ export default function Home() {
   const [isSyncing, setIsSyncing] = useState(false)
   const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
   const instance = axios.create({
-    baseURL: NEXT_PUBLIC_CLOVER_URL,
+    baseURL: process.env.NEXT_PUBLIC_CLOVER_URL,
     headers: { 'Authorization': `Bearer ${AUTH_TOKEN}`}
   })
 
