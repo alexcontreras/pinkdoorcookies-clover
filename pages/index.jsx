@@ -16,6 +16,7 @@ export default function Home() {
   })
 
   const syncInventory = () => {
+    console.log(${AUTH_TOKEN})
     setIsLoading(true)
     setIsSyncing(true)
     instance.get('/v3/merchants/4FKKZT8Q4YAF1/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock').then((res) => {
