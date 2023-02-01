@@ -15,17 +15,21 @@ export default function Home() {
     baseURL: process.env.NEXT_PUBLIC_LOCAL_URL,
   })
 
-  const syncInventory = () => {
+  const syncInventory = async () => {
     console.log(AUTH_TOKEN)
     setIsLoading(true)
     setIsSyncing(true)
-    instance.get('/v3/merchants/4FKKZT8Q4YAF1/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock').then((res) => {
-      localApi.post('/api/inventory/sync', res.data.elements).then((res) => {
+    try {
+      const response = await instance.get('/v3/merchants/4FKKZT8Q4YAF1/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock')
+      localApi.post('/api/inventory/sync', response.data.elements).then((res) => {
         console.log(res.data)
         setIsLoading(false)
         setIsSyncing(false)
       })
-		})
+    } catch(error) {
+      console.error(error)
+      return []
+    }
   }
 
   return (
