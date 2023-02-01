@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const instance = axios.create({
-	baseURL: 'http://localhost:3000'
+	baseURL: process.env.NEXT_PUBLIC_LOCAL_URL
 })
 
 const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
 const cloverInstance = axios.create({
-	baseURL: 'https://api.clover.com',
+	baseURL: process.env.NEXT_PUBLIC_CLOVER_URL,
 	headers: { 'Authorization': `Bearer ${AUTH_TOKEN}`}
 })
 
