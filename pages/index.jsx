@@ -7,7 +7,7 @@ export default function Home() {
   const [isSyncing, setIsSyncing] = useState(false)
   const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
   const instance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_CLOVER_URL,
+    baseURL: "https://api.clover.com",
     headers: { 
       'Authorization': `Bearer ${AUTH_TOKEN}`,
       'Access-Control-Allow-Origin': '*'
@@ -15,7 +15,7 @@ export default function Home() {
   })
 
   const localApi = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_LOCAL_URL,
+    baseURL: "https://nextjs-lqrsblsl2q-uc.a.run.app",
   })
 
   const syncInventory = async () => {
