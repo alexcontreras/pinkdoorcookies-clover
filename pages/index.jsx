@@ -7,15 +7,15 @@ export default function Home() {
   const [isSyncing, setIsSyncing] = useState(false)
   const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
   const instance = axios.create({
-    baseURL: "https://api.clover.com",
+    baseURL: process.env.NEXT_PUBLIC_CLOVER_URL,
     headers: { 
-      'Authorization': `Bearer 8a84d42c-35eb-8686-e601-8f643c879931`,
+      'Authorization': `Bearer ${AUTH_TOKEN}`,
       'Access-Control-Allow-Origin': '*'
     }
   })
 
   const localApi = axios.create({
-    baseURL: "https://nextjs-lqrsblsl2q-uc.a.run.app",
+    baseURL: process.env.NEXT_PUBLIC_LOCAL_URL,
   })
 
   const syncInventory = async () => {
@@ -23,7 +23,8 @@ export default function Home() {
     setIsLoading(true)
     setIsSyncing(true)
     try {
-      const response = await instance.get('/v3/merchants/4FKKZT8Q4YAF1/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock')
+      const endpoint = `/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
+      const response = await instance.get(endpoint)
       localApi.post('/api/inventory/sync', response.data.elements).then((res) => {
         console.log(res.data)
         setIsLoading(false)
@@ -31,6 +32,8 @@ export default function Home() {
       })
     } catch(error) {
       console.error(error)
+      setIsLoading(false)
+      setIsSyncing(false)
       return []
     }
   }
