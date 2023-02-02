@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const instance = axios.create({
-	baseURL: process.env.LOCAL_URL
+	baseURL: process.env.NEXT_PUBLIC_LOCAL_URL
 })
 
-const AUTH_TOKEN = process.env.CLOVER_AUTH_TOKEN
+const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
 const cloverInstance = axios.create({
 	baseURL: "https://api.clover.com",
 	headers: {
@@ -43,13 +43,12 @@ const InventoryTableItem = ({item}) => {
 
 		instance.post('/api/inventory', data)
 			.then((response) => {
-				console.log(response)
 				const body = {
 					"stockCount": data.nfm_after_transfer,
 					"quantity": data.nfm_after_transfer,
 				}
 				cloverInstance.post(
-					`/v3/merchants/${process.env.MERCHANT_ID}/item_stocks/${item.product_id}`,
+					`/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/item_stocks/${item.product_id}`,
 					body)
 						.then( (response) => {
 							console.log(response)

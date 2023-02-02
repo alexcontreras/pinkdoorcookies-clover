@@ -7,7 +7,6 @@ const Inventory = ({ isSyncing }) => {
 	
 	useEffect(() => {
 		axios.get('/api/inventory').then((data) => {
-			console.log(data.data)
 			setItems(data.data)
 		})
 	}, [isSyncing])

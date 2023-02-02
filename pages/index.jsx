@@ -1,36 +1,35 @@
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import Inventory from '../components/inventory/Inventory'
 export default function Home() {
   console.log(process.env)
   const [isLoading, setIsLoading] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
-  const AUTH_TOKEN = process.env.CLOVER_AUTH_TOKEN
-  const instance = axios.create({
-    baseURL: process.env.CLOVER_URL,
-    headers: { 
-      'Authorization': `Bearer ${AUTH_TOKEN}`,
-      'Access-Control-Allow-Origin': '*'
-    }
-  })
+  const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
 
-  const localApi = axios.create({
-    baseURL: process.env.LOCAL_URL,
-  })
-
-  const syncInventory = async () => {
-    console.log(AUTH_TOKEN)
+  const syncInventory = () => {
     setIsLoading(true)
     setIsSyncing(true)
     try {
-      const endpoint = `/v3/merchants/${process.env.MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
-      const response = await instance.get(endpoint)
-      localApi.post('/api/inventory/sync', response.data.elements).then((res) => {
-        console.log(res.data)
-        setIsLoading(false)
-        setIsSyncing(false)
+      const endpoint = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
+
+      fetch(endpoint, {
+        headers: {
+          'Authorization': `Bearer ${AUTH_TOKEN}`
+        }
       })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          axios.post('http://localhost:3000/api/inventory/sync', data.elements).then((res) => {
+            setIsLoading(false)
+            setIsSyncing(false)
+          })
+        })
+        .catch(error => {
+          console.error(error);
+        });
     } catch(error) {
       console.error(error)
       setIsLoading(false)
