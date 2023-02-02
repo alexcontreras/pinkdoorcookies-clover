@@ -1,5 +1,5 @@
 {
-  "name": "Clover - Pink Door Cookies Inventory",
+  "name": "clover-pdc",
   "options": {
     "allow-unauthenticated": true,
     "memory": "256Mi",
