@@ -22,7 +22,7 @@ export default function Home() {
         .then(response => response.json())
         .then(data => {
           console.log(data);
-          axios.post('http://localhost:3000/api/inventory/sync', data.elements).then((res) => {
+          axios.post(`${process.env.NEXT_PUBLIC_LOCAL_URL}/api/inventory/sync`, data.elements).then((res) => {
             setIsLoading(false)
             setIsSyncing(false)
           })
@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Pink Door Cookies - Clover API</title>
+        <title>Pink Door Cookies Inventory - Clover API</title>
         <meta name="description" content="Manage clover inventory" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
