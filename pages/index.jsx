@@ -8,7 +8,10 @@ export default function Home() {
   const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
   const instance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_CLOVER_URL,
-    headers: { 'Authorization': `Bearer ${AUTH_TOKEN}`}
+    headers: { 
+      'Authorization': `Bearer ${AUTH_TOKEN}`,
+      'Access-Control-Allow-Origin': '*'
+    }
   })
 
   const localApi = axios.create({
