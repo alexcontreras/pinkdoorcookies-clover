@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const instance = axios.create({
-	baseURL: "https://nextjs-lqrsblsl2q-uc.a.run.app/"
+	baseURL: process.env.LOCAL_URL
 })
 
-const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
+const AUTH_TOKEN = process.env.CLOVER_AUTH_TOKEN
 const cloverInstance = axios.create({
 	baseURL: "https://api.clover.com",
 	headers: {
-		'Authorization': `Bearer 8a84d42c-35eb-8686-e601-8f643c879931`,
+		'Authorization': `Bearer ${AUTH_TOKEN}`,
 		'Access-Control-Allow-Origin': '*'
 	}
 })
@@ -49,7 +49,7 @@ const InventoryTableItem = ({item}) => {
 					"quantity": data.nfm_after_transfer,
 				}
 				cloverInstance.post(
-					`/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/item_stocks/${item.product_id}`,
+					`/v3/merchants/${process.env.MERCHANT_ID}/item_stocks/${item.product_id}`,
 					body)
 						.then( (response) => {
 							console.log(response)

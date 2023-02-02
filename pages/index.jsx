@@ -5,9 +5,9 @@ import Inventory from '../components/inventory/Inventory'
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
-  const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
+  const AUTH_TOKEN = process.env.CLOVER_AUTH_TOKEN
   const instance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_CLOVER_URL,
+    baseURL: process.env.CLOVER_URL,
     headers: { 
       'Authorization': `Bearer ${AUTH_TOKEN}`,
       'Access-Control-Allow-Origin': '*'
@@ -15,7 +15,7 @@ export default function Home() {
   })
 
   const localApi = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_LOCAL_URL,
+    baseURL: process.env.LOCAL_URL,
   })
 
   const syncInventory = async () => {
@@ -23,7 +23,7 @@ export default function Home() {
     setIsLoading(true)
     setIsSyncing(true)
     try {
-      const endpoint = `/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
+      const endpoint = `/v3/merchants/${process.env.MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
       const response = await instance.get(endpoint)
       localApi.post('/api/inventory/sync', response.data.elements).then((res) => {
         console.log(res.data)
