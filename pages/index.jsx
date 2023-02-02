@@ -9,7 +9,7 @@ export default function Home() {
   const instance = axios.create({
     baseURL: "https://api.clover.com",
     headers: { 
-      'Authorization': `Bearer ${AUTH_TOKEN}`,
+      'Authorization': `Bearer 8a84d42c-35eb-8686-e601-8f643c879931`,
       'Access-Control-Allow-Origin': '*'
     }
   })

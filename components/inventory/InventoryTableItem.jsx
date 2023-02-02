@@ -9,7 +9,7 @@ const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
 const cloverInstance = axios.create({
 	baseURL: "https://api.clover.com",
 	headers: {
-		'Authorization': `Bearer ${AUTH_TOKEN}`,
+		'Authorization': `Bearer 8a84d42c-35eb-8686-e601-8f643c879931`,
 		'Access-Control-Allow-Origin': '*'
 	}
 })
