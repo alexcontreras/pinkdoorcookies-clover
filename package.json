@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -H https://nextjs-lqrsblsl2q-uc.a.run.app/",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Inventory from '../components/inventory/Inventory'
 export default function Home() {
+  console.log(process.env)
   const [isLoading, setIsLoading] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
   const AUTH_TOKEN = process.env.CLOVER_AUTH_TOKEN
