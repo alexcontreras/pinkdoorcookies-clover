@@ -16,7 +16,7 @@ export default function Home() {
 
       fetch(endpoint, {
         headers: {
-          'Authorization': `Bearer ${AUTH_TOKEN}`
+          'Authorization': `Bearer 8a84d42c-35eb-8686-e601-8f643c879931`
         },
         mode: 'no-cors'
       })
