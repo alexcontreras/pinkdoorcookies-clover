@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const instance = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_LOCAL_URL
-})
-
-const AUTH_TOKEN = process.env.NEXT_PUBLIC_CLOVER_AUTH_TOKEN
-const cloverInstance = axios.create({
-	baseURL: "https://api.clover.com",
-	headers: {
-		'Authorization': `Bearer ${AUTH_TOKEN}`,
-		'Access-Control-Allow-Origin': '*'
-	}
-})
-
 const InventoryTableItem = ({item}) => {
 	const [state, setState] = useState({
 		storeStock: item.stock_quantity_after_transfer,
@@ -41,18 +28,20 @@ const InventoryTableItem = ({item}) => {
 			history: null
 		}
 
-		instance.post('/api/inventory', data)
+		axios.post('/api/inventory', data)
 			.then((response) => {
 				const body = {
-					"stockCount": data.nfm_after_transfer,
 					"quantity": data.nfm_after_transfer,
 				}
-				cloverInstance.post(
-					`/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/item_stocks/${item.product_id}`,
-					body)
-						.then( (response) => {
-							console.log(response)
-						})
+				const url = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/item_stocks/${item.product_id}`
+				axios.post(`api/cors-proxy`, {
+					url,
+					method: 'POST',
+					data: body
+				})
+					.then( (response) => {
+						console.log(response)
+					})
 			}).catch((e) => { console.log(e) })
 		
 		setIsLoading(false)

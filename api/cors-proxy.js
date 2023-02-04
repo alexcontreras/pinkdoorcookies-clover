@@ -6,9 +6,16 @@ const options = {
 }
 
 const handler = async (req, res) => {
-  const { url } = req.query;
+  const { method, url, data } = req.body;
   try {
-    const response = await axios.get(url, options);
+    const response = await axios({
+      method,
+      url,
+      data,
+			headers: {
+				Authorization: `Bearer ${process.env.CLOVER_AUTH_TOKEN}`
+			}
+    });
     res.status(200).json(response.data);
   } catch (error) {
     console.error(error);

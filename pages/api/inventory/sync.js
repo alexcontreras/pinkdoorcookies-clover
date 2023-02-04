@@ -14,7 +14,7 @@ export default async (req, res) => {
 	try {
 		// Define the data
 		const dataObjects = req.body
-		let data = dataObjects.map(object => [object.id, object.name, object.stockCount])
+		let data = dataObjects.map(object => [object.id, object.name, object.itemStock.stockCount])
 
 		// Generate placeholders
 		const placeholders = data.map(() => '(?, ?, ?)').join(', ')
