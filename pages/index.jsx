@@ -10,7 +10,7 @@ export default function Home() {
     setIsLoading(true)
     setIsSyncing(true)
     try {
-      const endpoint = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
+      const endpoint = `https://api.clover.com/v3/merchants/4FKKZT8Q4YAF1/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
 
       const { data } = await axios.post('/api/cors-proxy', {
         url: endpoint,

@@ -33,7 +33,7 @@ const InventoryTableItem = ({item}) => {
 				const body = {
 					"quantity": data.nfm_after_transfer,
 				}
-				const url = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/item_stocks/${item.product_id}`
+				const url = `https://api.clover.com/v3/merchants/4FKKZT8Q4YAF1/item_stocks/${item.product_id}`
 				axios.post(`api/cors-proxy`, {
 					url,
 					method: 'POST',
