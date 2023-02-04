@@ -11,9 +11,11 @@ export default function Home() {
     setIsLoading(true)
     setIsSyncing(true)
     try {
-      const endpoint = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock&access_token=${AUTH_TOKEN}`
+      const endpoint = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
 
-      fetch(endpoint)
+      fetch(endpoint, {
+        headers: `Authorization: Bearer ${AUTH_TOKEN}`
+      })
         .then(response => response.json())
         .then(data => {
           console.log(data);
