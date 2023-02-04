@@ -72,7 +72,7 @@ const InventoryTableItem = ({item}) => {
 				<input 
 					type="number" 
 					name="storeStock" 
-					value={state.storeStock}
+					value={state.storeStock || ''}
 					onChange={handleChange}
 					className="form-control" 
 					min="0" /></td>

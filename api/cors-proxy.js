@@ -1,7 +1,7 @@
 const axios = require('axios');
 const options = {
 	headers: {
-		'Authorization': 'Bearer 8a84d42c-35eb-8686-e601-8f643c879931'
+		'Authorization': `Bearer ${process.env.CLOVER_AUTH_TOKEN}`
 	}
 }
 

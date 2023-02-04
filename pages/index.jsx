@@ -13,11 +13,10 @@ export default function Home() {
     try {
       const endpoint = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
 
-      fetch(`/api/cors-proxy?url=${endpoint}`)
-        .then(response => response.json())
+      axios.get(`/api/cors-proxy?url=${endpoint}`)
         .then(data => {
           console.log(data);
-          axios.post(`${process.env.NEXT_PUBLIC_LOCAL_URL}/api/inventory/sync`, data.elements).then((res) => {
+          axios.post('/api/inventory/sync', data.data.elements).then((res) => {
             setIsLoading(false)
             setIsSyncing(false)
           })
