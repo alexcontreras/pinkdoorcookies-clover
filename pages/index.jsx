@@ -14,7 +14,9 @@ export default function Home() {
       const endpoint = `https://api.clover.com/v3/merchants/${process.env.NEXT_PUBLIC_MERCHANT_ID}/categories/R4XEGFAM3BDVG/items?filter=available=true&limit=1000&expand=itemStock`
 
       fetch(endpoint, {
-        headers: `Authorization: Bearer ${AUTH_TOKEN}`
+        headers: {
+          'Authorization': `Bearer ${AUTH_TOKEN}`
+        }
       })
         .then(response => response.json())
         .then(data => {
