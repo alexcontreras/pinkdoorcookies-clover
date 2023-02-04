@@ -17,7 +17,8 @@ export default function Home() {
       fetch(endpoint, {
         headers: {
           'Authorization': `Bearer ${AUTH_TOKEN}`
-        }
+        },
+        mode: 'no-cors'
       })
         .then(response => response.json())
         .then(data => {
