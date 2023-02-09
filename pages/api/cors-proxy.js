@@ -1,3 +1,3 @@
-const handler = require('../../api/cors-proxy');
+const handler = require('../../api/cors-proxy')
 
-export default handler;
+export default handler

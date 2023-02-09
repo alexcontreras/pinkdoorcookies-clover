@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import Inventory from '../components/inventory/Inventory'
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSyncing, setIsSyncing] = useState(false)
@@ -14,7 +15,7 @@ export default function Home() {
 
       const { data } = await axios.post('/api/cors-proxy', {
         url: endpoint,
-        method: 'GET'
+        method: 'GET',
       })
 
       console.log('Data:', data)
@@ -26,12 +27,13 @@ export default function Home() {
           console.log(res)
         })
       }
-    } catch(error) {
+    } catch (error) {
       console.error(error)
       setIsLoading(false)
       setIsSyncing(false)
       return []
     }
+    return []
   }
 
   return (
@@ -47,7 +49,14 @@ export default function Home() {
           <div className="col">
             <h1>
               PDC Inventory
-              <button className="btn btn-danger btn-sm ms-3" disabled={isLoading} onClick={syncInventory}>Sync Inventory</button>
+              <button
+                type="button"
+                className="btn btn-danger btn-sm ms-3"
+                disabled={isLoading}
+                onClick={syncInventory}
+              >
+                Sync Inventory
+              </button>
               {isSyncing && (
                 <div className="spinner-grow" role="status">
                   <span className="visually-hidden">Loading...</span>
